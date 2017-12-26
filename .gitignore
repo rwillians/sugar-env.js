@@ -1,0 +1,10 @@
+coverage
+deployable
+node_modules
+*.log
+.DS_Store
+.env
+.envrc
+.node_repl_history
+.nyc_output
+npm-debug.log*

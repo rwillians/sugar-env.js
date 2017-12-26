@@ -1,0 +1,25 @@
+{
+  "name": "sugar-env",
+  "version": "1.0.0",
+  "description": "Sugar code to read environment variables with default values.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rwillians/sugar-env.js.git"
+  },
+  "keywords": [
+    "env",
+    "environment",
+    "default",
+    "current"
+  ],
+  "author": "Rafael Willians <me@rwillians.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rwillians/sugar-env.js/issues"
+  },
+  "homepage": "https://github.com/rwillians/sugar-env.js#readme"
+}
