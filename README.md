@@ -69,8 +69,8 @@ const env = require('sugar-env')
 console.log(env.get('FOOBAR'))                          // "foobar"
 console.log(env.get('FOOBAR', 'default value'))         // "foobar"
 
-console.log(env.get('FOOBAR_EMPTY'))                    // null
-console.log(env.get('FOOBAR_EMPTY', 'default value'))   // "default value"
+console.log(env.get('FOOBAR_EMPTY'))                    // '' (empty string)
+console.log(env.get('FOOBAR_EMPTY', 'default value'))   // '' (empty string)
 
 console.log(env.get('SOME_UNDEFINED_VARIABLE'))         // null
 console.log(env.get('SOME_UNDEFINED_VARIABLE', 23424))  // 23424
