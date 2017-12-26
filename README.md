@@ -57,7 +57,7 @@ if (env.is('production')) {
 
 ### env.get(String name, Mixed defaultValue = null) : Mixed
 
-Gets the value of the given environment variable. In case its not set or empty, the default value will be returned.
+Gets the value of the given environment variable. In case its not set, the default value will be returned.
 
 ```sh
 $ FOOBAR_EMPTY= FOOBAR=foobar node sample.js
