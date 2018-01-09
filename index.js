@@ -13,18 +13,32 @@ const current = process.env.NODE_ENV || 'development'
  *                         name is set within the environment variables.
  */
 const has = (name) => {
-  return process.env.hasOwnProperty(name)
+  return name in process.env
 }
 
 /**
- * Gets the given environment variable's value or returns a default value.
- * @param  {String}         name     Environment variable's name.
- * @param  {String|Number}  fallback Default value.
- * @return {Mixed}                   Environment variable's value or default
- *                                   value.
+ * Gets the first given environment variables' value or returns a fallback
+ * value.
+ * @param  {Array[String]|String} names    Environment variable's name(s).
+ * @param  {String}               fallback Fallback value.
+ * @return {String}                        Environment variable's value or
+ *                                         fallback value.
  */
-const get = (name, fallback = null) => {
-  return has(name) ? process.env[name] : fallback
+const get = (names, fallback = null) => {
+  if (!Array.isArray(names)) {
+    names = [names]
+  }
+
+  const values = names.filter(name => has(name))
+                      .map(name => process.env[name])
+
+  if (values.length === 0) {
+    return fallback !== null
+      ? fallback.toString()
+      : fallback
+  }
+
+  return values.shift()
 }
 
 /**
