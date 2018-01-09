@@ -4,7 +4,8 @@
   "description": "Sugar code to read environment variables with default values.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "standard --global describe --global expect --global it",
+    "test": "mocha test/*.test.js --check-leaks --full-trace --use_strict --recursive --require ./test/helper.js"
   },
   "repository": {
     "type": "git",
@@ -21,5 +22,11 @@
   "bugs": {
     "url": "https://github.com/rwillians/sugar-env.js/issues"
   },
-  "homepage": "https://github.com/rwillians/sugar-env.js#readme"
+  "homepage": "https://github.com/rwillians/sugar-env.js#readme",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^4.1.0",
+    "nyc": "^11.4.1",
+    "standard": "^10.0.3"
+  }
 }

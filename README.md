@@ -15,7 +15,7 @@ if (env.is('production')) {
 }
 
 const port = env.get('PORT')
-const host = env.get('HOST', '0.0.0.0')
+const host = env.get(['HOST', 'BIND_ADDR'], '0.0.0.0')
 
 app.listen({ host, port }, () => {
   console.log(`${env.current} server running at ${host}:${port}`) // "development server running at 0.0.0.0:3000"
@@ -24,54 +24,35 @@ app.listen({ host, port }, () => {
 
 ## API
 
-- env
-    - **[.concurrent](#envcurrent--string)**
-    - **[.is(name)](#envisstring-environment--boolean)**
-    - **[.get(name, defaultValue)](#envgetstring-name-mixed-defaultvalue--null--mixed)**
+- sugar-env:
+    - **.concurrent: String**: returns the current environment name;
+    - **.is(String environment): Boolean**: checks if the given environment matchs the current environment name;
+    - **.get(Array[String]|String names, String fallback = null): String**: gets the given environment variable or returns the fallback value. If an array of environment variables is given, the value of the first one to be found is returned.
 
-### env.current : String
+---
 
-The current environment name.
-Defaults to **"development"** if `NODE_ENV` environment variables is not defined or empty.
-
-```js
-const env = require('sugar-env')
-
-console.log(`current environment is ${env.current}`)
 ```
+$ mocha test/*.test.js --check-leaks --full-trace --use_strict --recursive --require ./test/helper.js
 
 
-### env.is(String environment) : Boolean
+  sugar-env
+    .get(names: Array[String]|String, fallback: String): String
+      ✓ returns the environment value when the variable exists
+      ✓ returns `null` by default when the given environment variable(s) doesn't exists
+      ✓ fallback value can be changed by setting the second argument
+      ✓ returns the first found environment variable's value when an array of names is given
+      ✓ returns the fallback value when none of the given environment variable names were found
 
-Checks if the given environment is equals to the current environment.
+  sugar-env
+    .has(name: String): Boolean
+      ✓ returns `true` if exists an environment variable with the given name
+      ✓ returns `false` when there's no environment variable with the given name
 
-```js
-const env = require('sugar-env')
-
-if (env.is('production')) {
-    console.error('this command should not be executed on production')
-    process.exit(1)
-}
-```
+  sugar-env
+    .is(environment: String): Boolean
+      ✓ returns `true` if the given environment name is the current environment
+      ✓ returns `false` when the given environment name doesn't match the current environment
 
 
-### env.get(String name, Mixed defaultValue = null) : Mixed
-
-Gets the value of the given environment variable. In case its not set, the default value will be returned.
-
-```sh
-$ FOOBAR_EMPTY= FOOBAR=foobar node sample.js
-```
-
-```js
-const env = require('sugar-env')
-
-console.log(env.get('FOOBAR'))                          // "foobar"
-console.log(env.get('FOOBAR', 'default value'))         // "foobar"
-
-console.log(env.get('FOOBAR_EMPTY'))                    // '' (empty string)
-console.log(env.get('FOOBAR_EMPTY', 'default value'))   // '' (empty string)
-
-console.log(env.get('SOME_UNDEFINED_VARIABLE'))         // null
-console.log(env.get('SOME_UNDEFINED_VARIABLE', 23424))  // 23424
+  9 passing (10ms)
 ```
