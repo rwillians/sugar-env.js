@@ -22,7 +22,7 @@ describe('sugar-env', () => {
       expect(env.get(['FOO_BAR', 'MONGO_URL'])).to.be.equals('mongo://foo.bar:27018/baz')
     })
 
-    it('returns the fallback value when none of the given environment variable names were found', () =>{
+    it('returns the fallback value when none of the given environment variable names were found', () => {
       expect(env.get(['FOO_BAR', 'BAR_BAZ'])).to.be.equals(null)
     })
   })
