@@ -29,16 +29,17 @@ const get = (names, fallback = null) => {
     names = [names]
   }
 
-  const values = names.filter(name => has(name))
-                      .map(name => process.env[name])
+  const value = names.filter(name => has(name))
+                     .map(name => process.env[name])
+                     .shift()
 
-  if (values.length === 0) {
+  if (!value) {
     return fallback !== null
       ? fallback.toString()
       : fallback
   }
 
-  return values.shift()
+  return value
 }
 
 /**

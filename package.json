@@ -1,6 +1,6 @@
 {
   "name": "sugar-env",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "Sugar code to read environment variables with default values.",
   "main": "index.js",
   "scripts": {
