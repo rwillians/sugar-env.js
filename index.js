@@ -63,8 +63,9 @@ module.exports.is = is
 module.exports.get = get
 module.exports.has = has
 module.exports.current = current
+
 module.exports.TEST = TEST
-module.exports.STAGING = STAGING
 module.exports.REVIEW = REVIEW
+module.exports.STAGING = STAGING
 module.exports.PRODUCTION = PRODUCTION
 module.exports.DEVELOPMENT = DEVELOPMENT
