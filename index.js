@@ -1,10 +1,16 @@
 'use strict'
 
+const TEST = 'test'
+const STAGE = 'stage'
+const REVIEW = 'review'
+const PRODUCTION = 'production'
+const DEVELOPMENT = 'development'
+
 /**
  * Current environment name.
  * @type {String}
  */
-const current = process.env.NODE_ENV || 'development'
+const current = process.env.NODE_ENV || DEVELOPMENT
 
 /**
  * Checks if the given environment variable name is set.
@@ -57,3 +63,8 @@ module.exports.is = is
 module.exports.get = get
 module.exports.has = has
 module.exports.current = current
+module.exports.TEST = TEST
+module.exports.STAGE = STAGE
+module.exports.REVIEW = REVIEW
+module.exports.PRODUCTION = PRODUCTION
+module.exports.DEVELOPMENT = DEVELOPMENT

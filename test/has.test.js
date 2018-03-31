@@ -1,6 +1,7 @@
 'use strict'
 
 const env = require('../index')
+const { expect } = require('chai')
 
 describe('sugar-env', () => {
   describe('.has(name: String): Boolean', () => {
