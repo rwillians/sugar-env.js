@@ -1,8 +1,8 @@
 'use strict'
 
 const TEST = 'test'
-const STAGE = 'stage'
 const REVIEW = 'review'
+const STAGING = 'staging'
 const PRODUCTION = 'production'
 const DEVELOPMENT = 'development'
 
@@ -64,7 +64,7 @@ module.exports.get = get
 module.exports.has = has
 module.exports.current = current
 module.exports.TEST = TEST
-module.exports.STAGE = STAGE
+module.exports.STAGING = STAGING
 module.exports.REVIEW = REVIEW
 module.exports.PRODUCTION = PRODUCTION
 module.exports.DEVELOPMENT = DEVELOPMENT
