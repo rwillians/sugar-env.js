@@ -58,7 +58,10 @@ const is = (environment) => {
   return current === environment
 }
 
-module.exports = get
+module.exports = (current) => ({
+  is: (environment) => current === environment
+})
+
 module.exports.is = is
 module.exports.get = get
 module.exports.has = has

@@ -3,8 +3,8 @@
 const env = require('../index')
 const { expect } = require('chai')
 
-describe('sugar-env', () => {
-  describe('.has(name: String): Boolean', () => {
+describe('const env = require(\'sugar-env\')', () => {
+  describe('env.has(name: String): Boolean', () => {
     process.env['FOO_HAS'] = '1'
 
     it('returns `true` if exists an environment variable with the given name', () => {

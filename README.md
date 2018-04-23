@@ -31,28 +31,32 @@ app.listen({ host, port }, () => {
 
 ---
 
-```
-$ mocha test/*.test.js --check-leaks --full-trace --use_strict --recursive --require ./test/helper.js
+```txt
+> mocha test/*.test.js --check-leaks --full-trace --use_strict --recursive
 
+  const env = require('sugar-env')
+    env(current).is(environment: String): Boolean
+      ✓ returns `true` if the given environment name is the current environment
+      ✓ returns `false` when the given environment name doesn't match the current environment
 
-  sugar-env
-    .get(names: Array[String]|String, fallback: String): String
+  const env = require('sugar-env')
+    env.get(names: Array[String]|String, fallback: String): String
       ✓ returns the environment value when the variable exists
       ✓ returns `null` by default when the given environment variable(s) doesn't exists
       ✓ fallback value can be changed by setting the second argument
       ✓ returns the first found environment variable's value when an array of names is given
       ✓ returns the fallback value when none of the given environment variable names were found
 
-  sugar-env
-    .has(name: String): Boolean
+  const env = require('sugar-env')
+    env.has(name: String): Boolean
       ✓ returns `true` if exists an environment variable with the given name
       ✓ returns `false` when there's no environment variable with the given name
 
-  sugar-env
-    .is(environment: String): Boolean
+  const env = require('sugar-env')
+    env.is(environment: String): Boolean
       ✓ returns `true` if the given environment name is the current environment
       ✓ returns `false` when the given environment name doesn't match the current environment
 
 
-  9 passing (10ms)
+  11 passing (8ms)
 ```
