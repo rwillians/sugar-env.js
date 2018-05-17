@@ -1,6 +1,6 @@
 {
   "name": "sugar-env",
-  "version": "1.3.2",
+  "version": "1.4.0",
   "description": "Sugar code to read environment variables with default values.",
   "main": "index.js",
   "scripts": {
@@ -27,7 +27,7 @@
   "devDependencies": {
     "chai": "^4.1.2",
     "mocha": "^4.1.0",
-    "nyc": "^11.4.1",
+    "nyc": "^11.8.0",
     "standard": "^10.0.3"
   }
 }

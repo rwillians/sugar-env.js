@@ -19,7 +19,9 @@ const current = process.env.NODE_ENV || DEVELOPMENT
  *                         name is set within the environment variables.
  */
 const has = (name) => {
-  return name in process.env
+  return name in process.env &&
+    typeof process.env[name] === 'string' &&
+    process.env[name].length > 0
 }
 
 /**
@@ -32,7 +34,7 @@ const has = (name) => {
  */
 const get = (names, fallback = null) => {
   if (!Array.isArray(names)) {
-    names = [names]
+    return get([ names ], fallback)
   }
 
   const value = names.filter(name => has(name))
