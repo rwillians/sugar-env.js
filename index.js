@@ -51,6 +51,66 @@ const get = (names, fallback = null) => {
 }
 
 /**
+ * Decodes value from base64.
+ * @param  {Array} args Function arguments.
+ * @return {Number}     Number or null.
+ */
+get.base64 = (...args) => {
+  const value = get(...args)
+
+  if (value === null) {
+    return null
+  }
+
+  return Buffer.from(value, 'base64').toString('utf8')
+}
+
+/**
+ * Casts the value into integer.
+ * @param  {Array} args Function arguments.
+ * @return {Number}     Number or null.
+ */
+get.int = (...args) => {
+  const value = get(...args)
+
+  if (value === null) {
+    return null
+  }
+
+  return parseInt(value)
+}
+
+/**
+ * Casts the value into float.
+ * @param  {Array} args Function arguments.
+ * @return {Number}     Number or null.
+ */
+get.float = (...args) => {
+  const value = get(...args)
+
+  if (value === null) {
+    return null
+  }
+
+  return parseFloat(value)
+}
+
+/**
+ * Ensures trailing slash.
+ * @param  {Array} args Function arguments.
+ * @return {String}     String or null.
+ */
+get.url = (...args) => {
+  const value = get(...args)
+
+  if (value === null) {
+    return null
+  }
+
+  return value.endsWith('/') ? value : `${value}/`
+}
+
+/**
  * Checks if the given environment name is the same as the current environment.
  * @param  {String} environment An environment name.
  * @return {Boolean}            Returns `true` if the given environment name is
