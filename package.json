@@ -2,7 +2,7 @@
   "name": "sugar-env",
   "version": "1.5.2",
   "description": "Sugar code to read environment variables with default values.",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "coverage": "nyc --branches 100 --functions 100 --lines 100 --statements 100 npm test",
     "lint": "standard --global describe --global it",
@@ -20,6 +20,9 @@
     "current"
   ],
   "author": "Rafael Willians <me@rwillians.com>",
+  "contributors": [
+    "Lucas Santos <hello@lsantos.dev>"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/rwillians/sugar-env.js/issues"
@@ -31,5 +34,8 @@
     "mocha": "^4.1.0",
     "nyc": "^11.8.0",
     "standard": "^10.0.3"
-  }
+  },
+  "files": [
+    "dist/**/*"
+  ]
 }
