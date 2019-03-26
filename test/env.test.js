@@ -1,6 +1,6 @@
 'use strict'
 
-const env = require('../index')
+const env = require('../dist/index')
 const { expect } = require('chai')
 
 describe('const env = require(\'sugar-env\')', () => {
