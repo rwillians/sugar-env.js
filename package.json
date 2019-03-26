@@ -6,7 +6,8 @@
   "scripts": {
     "coverage": "nyc --branches 100 --functions 100 --lines 100 --statements 100 npm test",
     "lint": "standard --global describe --global it",
-    "test": "mocha test/*.test.js --check-leaks --full-trace --use_strict --recursive"
+    "test": "mocha test/*.test.js --check-leaks --full-trace --use_strict --recursive",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,7 @@
   },
   "homepage": "https://github.com/rwillians/sugar-env.js#readme",
   "devDependencies": {
+    "@types/node": "^11.11.8",
     "chai": "^4.1.2",
     "mocha": "^4.1.0",
     "nyc": "^11.8.0",

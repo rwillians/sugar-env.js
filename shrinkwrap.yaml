@@ -1,9 +1,14 @@
 devDependencies:
+  '@types/node': 11.11.8
   chai: 4.1.2
   mocha: 4.1.0
   nyc: 11.9.0
   standard: 10.0.3
 packages:
+  /@types/node/11.11.8:
+    dev: true
+    resolution:
+      integrity: sha512-87dYasmW2iLSYNTc3WU85taIQb1RBz6KK9w/Hnbkyu3n9xeNd0fbVaPoGMyX1ErGB8PaqNuCtYjpoI9aN6DoCg==
   /acorn-jsx/3.0.1:
     dependencies:
       acorn: 3.3.0
@@ -1583,6 +1588,7 @@ registry: 'https://registry.npmjs.org/'
 shrinkwrapMinorVersion: 9
 shrinkwrapVersion: 3
 specifiers:
+  '@types/node': ^11.11.8
   chai: ^4.1.2
   mocha: ^4.1.0
   nyc: ^11.8.0
