@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "coverage": "nyc --branches 100 --functions 100 --lines 100 --statements 100 npm test",
+    "prepare": "tsc",
     "lint": "standard --global describe --global it",
     "test": "mocha test/*.test.js --check-leaks --full-trace --use_strict --recursive",
     "build": "tsc"
