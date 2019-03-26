@@ -6,6 +6,7 @@ const { expect } = require('chai')
 describe('const env = require(\'sugar-env\')', () => {
   describe('env.get.int(name: String): Number', () => {
     process.env.STRING_NUMBER = "45"
+    process.env.NAN = "false"
 
     it('returns the given env as number', () => {
       expect(typeof env.get.int('STRING_NUMBER', null)).to.be.equals('number')
@@ -14,10 +15,15 @@ describe('const env = require(\'sugar-env\')', () => {
     it('returns `null` when the parameter is null', () => {
       expect(env.get.int('NULL', null)).to.be.equals(null)
     })
+
+    it('returns `NaN` when the parameter is NaN', () => {
+      expect(isNaN(env.get.int('NAN', null))).to.be.equals(true)
+    })
   })
 
   describe('env.get.float(name: String): Number', () => {
     process.env.STRING_NUMBER = "45.4"
+    process.env.NAN = "false"
 
     it('returns the given env as number', () => {
       expect(typeof env.get.float('STRING_NUMBER', null)).to.be.equals('number')
@@ -25,6 +31,10 @@ describe('const env = require(\'sugar-env\')', () => {
 
     it('returns `null` when the parameter is null', () => {
       expect(env.get.float('NULL', null)).to.be.equals(null)
+    })
+
+    it('returns `NaN` when the parameter is NaN', () => {
+      expect(isNaN(env.get.float('NAN', null))).to.be.equals(true)
     })
   })
 

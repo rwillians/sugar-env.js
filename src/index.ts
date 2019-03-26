@@ -9,7 +9,7 @@ interface IConversionFunction<T> {
 function _getAs<T> (fn: IConversionFunction<T>) {
   return (names: string | string[], fallback: Nullable<string>) => {
     const value = get(names, fallback)
-    if (!value) return value
+    if (value === null) return value
     return fn(value)
   }
 }
