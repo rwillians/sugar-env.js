@@ -32,12 +32,35 @@ app.listen({ host, port }, () => {
 ---
 
 ```txt
-> mocha test/*.test.js --check-leaks --full-trace --use_strict --recursive
+  const env = require('sugar-env')
+    env.get.int(name: String): Number
+      ✓ returns the given env as number
+      ✓ returns `null` when the parameter is null
+      ✓ returns `NaN` when the parameter is NaN
+    env.get.float(name: String): Number
+      ✓ returns the given env as number
+      ✓ returns `null` when the parameter is null
+      ✓ returns `NaN` when the parameter is NaN
+    env.get.url(name: String): String
+      ✓ returns the given env with trailing slash
+      ✓ returns `null` when the parameter is null
+      ✓ returns the value when there is already a trailing slash
+    env.get.base64(name: String): String
+      ✓ returns the given env as plain text
+      ✓ returns `null` when the parameter is null
 
   const env = require('sugar-env')
-    env(current).is(environment: String): Boolean
+    env(current: String).is(environment: String): Boolean
       ✓ returns `true` if the given environment name is the current environment
       ✓ returns `false` when the given environment name doesn't match the current environment
+
+  const env = require('sugar-env')
+    env.ENVIRONMENT: String
+      ✓ Should return the test environment string
+      ✓ Should return the development environment string
+      ✓ Should return the staging environment string
+      ✓ Should return the production environment string
+      ✓ Should return the review environment string
 
   const env = require('sugar-env')
     env.get(names: Array[String]|String, fallback: String): String
@@ -57,6 +80,5 @@ app.listen({ host, port }, () => {
       ✓ returns `true` if the given environment name is the current environment
       ✓ returns `false` when the given environment name doesn't match the current environment
 
-
-  11 passing (8ms)
+  27 passing (15ms)
 ```
