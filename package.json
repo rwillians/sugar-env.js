@@ -1,42 +1,42 @@
 {
   "name": "sugar-env",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "description": "Sugar code to read environment variables with default values.",
+  "license": "MIT",
   "main": "dist/index.js",
-  "scripts": {
-    "coverage": "nyc --branches 100 --functions 100 --lines 100 --statements 100 npm test",
-    "prepare": "tsc",
-    "lint": "standard --global describe --global it",
-    "test": "mocha test/*.test.js --check-leaks --full-trace --use_strict --recursive",
-    "build": "tsc"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/rwillians/sugar-env.js.git"
-  },
+  "author": "Rafael Willians <me@rwillians.com>",
+  "contributors": [
+    "Lucas Santos <hello@lsantos.dev>"
+  ],
   "keywords": [
     "env",
     "environment",
     "default",
     "current"
   ],
-  "author": "Rafael Willians <me@rwillians.com>",
-  "contributors": [
-    "Lucas Santos <hello@lsantos.dev>"
-  ],
-  "license": "MIT",
+  "homepage": "https://github.com/rwillians/sugar-env.js#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rwillians/sugar-env.js.git"
+  },
   "bugs": {
     "url": "https://github.com/rwillians/sugar-env.js/issues"
   },
-  "homepage": "https://github.com/rwillians/sugar-env.js#readme",
-  "devDependencies": {
-    "@types/node": "^11.11.8",
-    "chai": "^4.1.2",
-    "mocha": "^4.1.0",
-    "nyc": "^11.8.0",
-    "standard": "^10.0.3"
+  "scripts": {
+    "build": "tsc",
+    "coverage": "nyc --branches 100 --functions 100 --lines 100 --statements 100 npm test",
+    "lint": "standard --global describe --global it",
+    "test": "mocha test/*.test.js --check-leaks --full-trace --use_strict --recursive"
   },
   "files": [
     "dist/**/*"
-  ]
+  ],
+  "devDependencies": {
+    "@types/node": "^11.12.0",
+    "chai": "^4.2.0",
+    "mocha": "^6.0.2",
+    "nyc": "^13.3.0",
+    "standard": "^12.0.1",
+    "typescript": "^3.3.4000"
+  }
 }
