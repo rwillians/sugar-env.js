@@ -7,9 +7,9 @@ interface IConversionFunction<T> {
 }
 
 function _getAs<T> (fn: IConversionFunction<T>) {
-  function getAs (names: string | string[]): T | null
+  function getAs (names: string | string[]): Nullable<T>
   function getAs (names: string | string[], fallback: T): T
-  function getAs (names: string | string[], fallback: T | null = null) {
+  function getAs (names: string | string[], fallback: Nullable<T> = null) {
     const value = get(names)
     if (value === null) return fallback
     return fn(value)
