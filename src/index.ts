@@ -7,11 +7,15 @@ interface IConversionFunction<T> {
 }
 
 function _getAs<T> (fn: IConversionFunction<T>) {
-  return (names: string | string[], fallback: Nullable<string>) => {
-    const value = get(names, fallback)
-    if (value === null) return value
+  function getAs (names: string | string[]): T | null
+  function getAs (names: string | string[], fallback: T): T
+  function getAs (names: string | string[], fallback: T | null = null) {
+    const value = get(names)
+    if (value === null) return fallback
     return fn(value)
   }
+
+  return getAs
 }
 
 /**
@@ -38,6 +42,8 @@ export function has (name: string): Boolean {
  * @return {String}                        Environment variable's value or
  *                                         fallback value.
  */
+export function get (names: string[] | string): Nullable<string>
+export function get<T> (names: string[] | string, fallback: T): string | T
 export function get (names: string[] | string, fallback: Nullable<string> = null): Nullable<string> {
   if (!Array.isArray(names)) return get([names], fallback)
 
