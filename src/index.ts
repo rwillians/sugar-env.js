@@ -2,49 +2,15 @@ import Environments from './structures/environments'
 
 type Nullable<T> = T | null
 
-interface IConversionFunction<T> {
-  (value: string): Nullable<T>
+const has = (name: string): Boolean => {
+  return name in process.env
+    && typeof process.env[name] === 'string'
+    && (process.env[name] as string).length > 0
 }
 
-function _getAs<T> (fn: IConversionFunction<T>) {
-  function getAs (names: string | string[]): Nullable<T>
-  function getAs (names: string | string[], fallback: T): T
-  function getAs (names: string | string[], fallback: Nullable<T> = null) {
-    const value = get(names)
-    if (value === null) return fallback
-    return fn(value)
-  }
-
-  return getAs
-}
-
-/**
- * Current environment name.
- * @type {String}
- */
-export const current = process.env.NODE_ENV || Environments.DEVELOPMENT
-
-/**
- * Checks if the given environment variable name is set.
- * @param  {String}   name Environment variable's name.
- * @return {Boolean}       Returns `true` if the given environment variable's
- *                         name is set within the environment variables.
- */
-export function has (name: string): Boolean {
-  return name in process.env && typeof process.env[name] === 'string' && (process.env[name] as string).length > 0
-}
-
-/**
- * Gets the first given environment variables' value or returns a fallback
- * value.
- * @param  {Array[String]|String} names    Environment variable's name(s).
- * @param  {String}               fallback Fallback value.
- * @return {String}                        Environment variable's value or
- *                                         fallback value.
- */
-export function get (names: string[] | string): Nullable<string>
-export function get<T> (names: string[] | string, fallback: T): string | T
-export function get (names: string[] | string, fallback: Nullable<string> = null): Nullable<string> {
+function get (names: string[] | string): Nullable<string>
+function get<T> (names: string[] | string, fallback: T): T
+function get (names: string[] | string, fallback: Nullable<string> = null): Nullable<string> {
   if (!Array.isArray(names)) return get([names], fallback)
 
   const value = names.filter(name => has(name))
@@ -56,54 +22,69 @@ export function get (names: string[] | string, fallback: Nullable<string> = null
   return value
 }
 
-/**
- * Decodes value from base64.
- * @param  {Array} names Function arguments.
- * @return {Number}     Number or null.
- */
-get.base64 = _getAs((value) => Buffer.from(value, 'base64').toString('utf8'))
+interface IConversionFunction<T> {
+  (value: string): Nullable<T>
+}
 
-/**
- * Casts the value into integer.
- * @param  {Array} names Function arguments.
- * @return {Number}     Number or null.
- */
-get.int = _getAs((value) => parseInt(value))
+function _getAs<T> (fn: IConversionFunction<T>) {
+  function getAs (names: string | string[]): Nullable<T>
+  function getAs (names: string | string[], fallback: T): T
+  function getAs (names: string | string[], fallback: Nullable<T> = null) {
+    const value = get(names)
+    if (value === null) {
+      return fallback
+    }
 
-/**
- * Casts the value into float.
- * @param  {Array} args Function arguments.
- * @return {Number}     Number or null.
- */
-get.float = _getAs((value) => parseFloat(value))
+    return fn(value)
+  }
 
-/**
- * Ensures trailing slash.
- * @param  {Array} args Function arguments.
- * @return {String}     String or null.
- */
-get.url = _getAs((value) => value.endsWith('/') ? value : `${value}/`)
+  return getAs
+}
 
-/**
- * Checks if the given environment name is the same as the current environment.
- * @param  {String} environment An environment name.
- * @return {Boolean}            Returns `true` if the given environment name is the same as the current environment name.
- */
-function is (environment: Environments): Boolean {
+get.base64 = _getAs<String>((value) => Buffer.from(value, 'base64').toString('utf8'))
+get.boolean = _getAs<Boolean>((value) => [ '1', 'true' ].includes(value.toLowerCase()))
+get.int = _getAs<Number>((value) => parseInt(value, 10))
+get.float = _getAs<Number>((value) => parseFloat(value))
+get.url = _getAs<String>((value) => value.endsWith('/') ? value : `${value}/`)
+
+const current = process.env.NODE_ENV || Environments.DEVELOPMENT
+
+const is = (environment: Environments): Boolean => {
   return current === environment
 }
 
-module.exports = (current: Environments): { is: (x: Environments) => Boolean } => ({
+const entrypoint = (current: Environments): { is: (x: Environments) => Boolean } => ({
   is: (environment: Environments) => current === environment
 })
 
-module.exports.is = is
-module.exports.get = get
-module.exports.has = has
-module.exports.current = current
+entrypoint.is = is
+entrypoint.get = get
+entrypoint.has = has
+entrypoint.current = current
 
-module.exports.TEST = Environments.TEST
-module.exports.REVIEW = Environments.REVIEW
-module.exports.STAGING = Environments.STAGING
-module.exports.PRODUCTION = Environments.PRODUCTION
-module.exports.DEVELOPMENT = Environments.DEVELOPMENT
+const TEST = Environments.TEST
+const REVIEW = Environments.REVIEW
+const STAGING = Environments.STAGING
+const PRODUCTION = Environments.PRODUCTION
+const DEVELOPMENT = Environments.DEVELOPMENT
+
+entrypoint.TEST = TEST
+entrypoint.REVIEW = REVIEW
+entrypoint.STAGING = STAGING
+entrypoint.PRODUCTION = PRODUCTION
+entrypoint.DEVELOPMENT = DEVELOPMENT
+
+export {
+  has,
+  get,
+  is,
+  current,
+  TEST,
+  REVIEW,
+  STAGING,
+  PRODUCTION,
+  DEVELOPMENT
+}
+
+export default entrypoint
+module.exports = entrypoint
