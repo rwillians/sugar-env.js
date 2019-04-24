@@ -41,11 +41,11 @@ function _getAs<T> (fn: IConversionFunction<T>) {
   return getAs
 }
 
-get.base64 = _getAs<String>((value) => Buffer.from(value, 'base64').toString('utf8'))
-get.boolean = _getAs<Boolean>((value) => [ '1', 'true' ].includes(value.toLowerCase()))
-get.int = _getAs<Number>((value) => parseInt(value, 10))
-get.float = _getAs<Number>((value) => parseFloat(value))
-get.url = _getAs<String>((value) => value.endsWith('/') ? value : `${value}/`)
+get.base64 = _getAs<string>((value) => Buffer.from(value, 'base64').toString('utf8'))
+get.boolean = _getAs<boolean>((value) => [ '1', 'true' ].includes(value.toLowerCase()))
+get.int = _getAs<number>((value) => parseInt(value, 10))
+get.float = _getAs<number>((value) => parseFloat(value))
+get.url = _getAs<string>((value) => value.endsWith('/') ? value : `${value}/`)
 
 const current = process.env.NODE_ENV || Environments.DEVELOPMENT
 
@@ -53,7 +53,7 @@ const is = (environment: Environments): Boolean => {
   return current === environment
 }
 
-const entrypoint = (current: Environments): { is: (x: Environments) => Boolean } => ({
+const entrypoint = (current: Environments): { is: (x: Environments) => boolean } => ({
   is: (environment: Environments) => current === environment
 })
 
