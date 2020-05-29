@@ -22,12 +22,21 @@ app.listen({ host, port }, () => {
 })
 ```
 
+### Usage with Deno
+
+You can use this with deno by importing the [mod.ts](mod.ts) file. The API is exactly the same.
+
+The Deno version will look for `DENO_ENV` instead of `NODE_ENV` when checking the current environment.
+
+**Requires `allow-env`**
+
 ## API
 
 - sugar-env:
     - **.concurrent: String**: returns the current environment name;
     - **.is(String environment): Boolean**: checks if the given environment matchs the current environment name;
     - **.get(Array[String]|String names, String fallback = null): String**: gets the given environment variable or returns the fallback value. If an array of environment variables is given, the value of the first one to be found is returned.
+
 
 ---
 
