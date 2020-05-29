@@ -52,7 +52,7 @@ get.int = _getAs<number>((value) => parseInt(value, 10))
 get.float = _getAs<number>((value) => parseFloat(value))
 get.url = _getAs<string>((value) => value.endsWith('/') ? value : `${value} /`)
 
-const current = process.env.NODE_ENV || Environments.DEVELOPMENT
+const current = process.env.DENO_ENV || Environments.DEVELOPMENT
 
 const is = (environment: Environments): Boolean => {
   return current === environment
