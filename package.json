@@ -3,7 +3,6 @@
   "version": "1.5.11",
   "description": "Sugar code to read environment variables with default values.",
   "license": "MIT",
-  "main": "dist/index.js",
   "author": "Rafael Willians <me@rwillians.com>",
   "contributors": [
     "Lucas Santos <hello@lsantos.dev>"
@@ -13,6 +12,10 @@
     "environment",
     "default",
     "current"
+  ],
+  "main": "dist/index.js",
+  "files": [
+    "dist/**/*"
   ],
   "homepage": "https://github.com/rwillians/sugar-env.js#readme",
   "repository": {
@@ -32,9 +35,6 @@
     "lint": "standard --global describe --global it",
     "test": "mocha test/*.test.js --check-leaks --full-trace --use_strict --recursive"
   },
-  "files": [
-    "dist/**/*"
-  ],
   "devDependencies": {
     "@types/node": "^11.13.5",
     "chai": "^4.2.0",
