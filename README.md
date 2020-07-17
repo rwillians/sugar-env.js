@@ -1,3 +1,10 @@
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![Coverage Status](https://coveralls.io/repos/github/rwillians/sugar-env.js/badge.svg?branch=master)](https://coveralls.io/github/rwillians/sugar-env.js?branch=master)
+[![Build Status](https://travis-ci.org/rwillians/sugar-env.js.svg?branch=master)](https://travis-ci.org/rwillians/sugar-env.js)
+![node-current](https://img.shields.io/node/v/sugar-env)
+
+[![NPM](https://nodei.co/npm/sugar-env.png)](https://npmjs.org/package/sugar-env)
+
 # sugar-env
 
 Sugar code to read environment variables with default values.
