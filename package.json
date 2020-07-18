@@ -1,6 +1,6 @@
 {
   "name": "sugar-env",
-  "version": "1.5.11",
+  "version": "1.5.12",
   "description": "Sugar code to read environment variables with default values.",
   "license": "MIT",
   "author": "Rafael Willians <me@rwillians.com>",
@@ -15,6 +15,7 @@
   ],
   "main": "dist/index.js",
   "files": [
+    "dist/*",
     "dist/**/*"
   ],
   "homepage": "https://github.com/rwillians/sugar-env.js#readme",
