@@ -1,6 +1,6 @@
 {
   "name": "sugar-env",
-  "version": "1.5.12",
+  "version": "1.5.13",
   "description": "Sugar code to read environment variables with default values.",
   "license": "MIT",
   "author": "Rafael Willians <me@rwillians.com>",
