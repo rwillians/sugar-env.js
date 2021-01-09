@@ -1,6 +1,6 @@
 {
   "name": "sugar-env",
-  "version": "1.5.13",
+  "version": "1.5.14",
   "description": "Sugar code to read environment variables with default values.",
   "license": "MIT",
   "author": "Rafael Willians <me@rwillians.com>",
@@ -34,14 +34,15 @@
     "coverage": "nyc --reporter=text npm test",
     "coverage:report": "nyc report --reporter=text-lcov",
     "lint": "standard --global describe --global it",
+    "pretest": "tsc",
     "test": "mocha test/*.test.js --check-leaks --full-trace --use_strict --recursive"
   },
   "devDependencies": {
-    "@types/node": "^11.13.5",
+    "@types/node": "^11.15.43",
     "chai": "^4.2.0",
-    "mocha": "^6.1.4",
+    "mocha": "^6.2.3",
     "nyc": "^14.0.0",
     "standard": "^12.0.1",
-    "typescript": "^3.4.3"
+    "typescript": "^3.9.7"
   }
 }
