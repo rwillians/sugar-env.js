@@ -1,5 +1,6 @@
 'use strict'
 
+const { describe, it } = require('mocha')
 const env = require('../dist/index')
 const { expect } = require('chai')
 
