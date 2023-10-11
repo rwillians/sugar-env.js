@@ -33,7 +33,8 @@
     "build": "tsc",
     "coverage": "nyc --reporter=text npm test",
     "coverage:report": "nyc report --reporter=text-lcov",
-    "lint": "standard --global describe --global it",
+    "lint": "standard",
+    "lint:fix": "standard --fix",
     "pretest": "tsc",
     "test": "mocha test/*.test.js --check-leaks --full-trace --use_strict --recursive"
   },
