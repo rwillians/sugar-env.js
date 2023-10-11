@@ -5,7 +5,7 @@ const { expect } = require('chai')
 
 describe('const env = require(\'sugar-env\')', () => {
   describe('env.get(names: Array[String]|String, fallback: String): String', () => {
-    process.env['MONGO_URL'] = 'mongo://foo.bar:27018/baz'
+    process.env.MONGO_URL = 'mongo://foo.bar:27018/baz'
 
     it('returns the environment value when the variable exists', () => {
       expect(env.get('MONGO_URL')).to.be.equals('mongo://foo.bar:27018/baz')
