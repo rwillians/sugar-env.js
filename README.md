@@ -31,61 +31,70 @@ app.listen({ host, port }, () => {
 
 ## API
 
-- sugar-env:
-    - **.concurrent: String**: returns the current environment name;
-    - **.is(String environment): Boolean**: checks if the given environment matchs the current environment name;
-    - **.get(Array[String]|String names, String fallback = null): String**: gets the given environment variable or returns the fallback value. If an array of environment variables is given, the value of the first one to be found is returned.
-
----
+Please read the test results to learn more about `sugar-env`'s API:
 
 ```txt
   const env = require('sugar-env')
-    env.get.int(name: String): Number
-      ✓ returns the given env as number
-      ✓ returns `null` when the parameter is null
-      ✓ returns `NaN` when the parameter is NaN
-    env.get.float(name: String): Number
-      ✓ returns the given env as number
-      ✓ returns `null` when the parameter is null
-      ✓ returns `NaN` when the parameter is NaN
-    env.get.url(name: String): String
-      ✓ returns the given env with trailing slash
-      ✓ returns `null` when the parameter is null
-      ✓ returns the value when there is already a trailing slash
-    env.get.base64(name: String): String
-      ✓ returns the given env as plain text
-      ✓ returns `null` when the parameter is null
+    env.current: string
+      ✔ returns the current environment's name (from NODE_ENV)
+      ✔ returns "development" when `NODE_ENV` isn't set
+    env.DEVELOPMENT: string
+      ✔ returns development's environment name: "development"
+    env.TEST: string
+      ✔ returns test's environment name: "test"
+    env.STAGING: string
+      ✔ returns staging's environment name: "staging"
+    env.REVIEW: string
+      ✔ returns review's environment name: "review"
+    env.PRODUCTION: string
+      ✔ returns production's environment name: "production"
 
   const env = require('sugar-env')
-    env(current: String).is(environment: String): Boolean
-      ✓ returns `true` if the given environment name is the current environment
-      ✓ returns `false` when the given environment name doesn't match the current environment
+    env.is(environment: string): boolean
+      ✔ returns `true` when the current environment name is the one specified
+      ✔ returns `false` when the current environment name is different than the one specified
+    [ DEPRECATED ] env(a: String).is(b: String): boolean
+      ✔ returns `true` when "a" is equals "b"
+      ✔ returns `false` when "a" is different than "b"
 
   const env = require('sugar-env')
-    env.ENVIRONMENT: String
-      ✓ Should return the test environment string
-      ✓ Should return the development environment string
-      ✓ Should return the staging environment string
-      ✓ Should return the production environment string
-      ✓ Should return the review environment string
+    env.get(envVarName: string): string
+      ✔ returns `null` when the environment variable doesn't exist
+      ✔ returns `null` when the environment variable's value is empty
+      ✔ returns the environment variable's value when it exists and it isn't empty
+    env.get(envVarNames: string[]): string
+      ✔ returns the value of the first environment variable which contains a non-empty value
+    env.get(envVarName: string | string[], defaultValue: string): string
+      ✔ returns `defaultValue` when the given environment variable doesn't exist
+      ✔ returns `defaultValue` when the given environment variable's value is empty
 
   const env = require('sugar-env')
-    env.get(names: Array[String]|String, fallback: String): String
-      ✓ returns the environment value when the variable exists
-      ✓ returns `null` by default when the given environment variable(s) doesn't exists
-      ✓ fallback value can be changed by setting the second argument
-      ✓ returns the first found environment variable's value when an array of names is given
-      ✓ returns the fallback value when none of the given environment variable names were found
+    env.get.boolean(envVarName: string): boolean
+      ✔ returns `true` when the given environment variable's value is "1"
+      ✔ returns `true` when the given environment variable's value is "true" (case insensitve)
+      ✔ returns `false` for anything else
+    env.get.int(envVarName: string): number
+      ✔ returns `null` when the given environment variable is missing
+      ✔ returns `null` when the given environment variable's value is empty
+      ✔ returns `NaN` when the given environment variable's value isn't an integer
+      ✔ return a `number` when the given environment variable's value is an integer
+    env.get.float(envVarName: string): number
+      ✔ returns `null` when the given environment variable is missing
+      ✔ returns `null` when the given environment variable's value is empty
+      ✔ returns `NaN` when the given environment variable's value isn't numeric
+      ✔ returns a `number` when the given environment variable's value is numeric
+    [ DEPRECATED ] env.get.url(envVarName: string): string
+      ✔ returns `null` when the environment variable's value is missing
+      ✔ returns `null` when the environment variable's value is empty
+      ✔ returns the environment variable's exact value when there is already a trailing slash
+      ✔ returns the environment variable's value with a trailing slash
+    env.get.base64(envVarName: string): string
+      ✔ returns `null` when the environment variable doesn't exist
+      ✔ returns `null` when the environment variable's value is empty
+      ✔ returns the environment variable's value after decoding it from base64
 
   const env = require('sugar-env')
-    env.has(name: String): Boolean
-      ✓ returns `true` if exists an environment variable with the given name
-      ✓ returns `false` when there's no environment variable with the given name
-
-  const env = require('sugar-env')
-    env.is(environment: String): Boolean
-      ✓ returns `true` if the given environment name is the current environment
-      ✓ returns `false` when the given environment name doesn't match the current environment
-
-  27 passing (15ms)
+    env.has(envVarName: string): boolean
+      ✔ returns `true` when the given environment variable exists
+      ✔ returns `false` when the given environment variable doesn't exist
 ```
