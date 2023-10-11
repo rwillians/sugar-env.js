@@ -41,138 +41,110 @@ export const config = {
 
 ## API
 
-Please read the test results to learn more about `sugar-env`'s API:
+Please read the test results to learn more about `sugar-env`'s API, they were wrote so it works as documentation:
 
 ```txt
-  import { env } from 'sugar-env'
-    `env.current: string`
-      ✔ returns the current environment's name (from NODE_ENV)
-      ✔ returns "dev" when `NODE_ENV` isn't set
-    `env.DEV: string`
-      ✔ returns development's environment name: "development"
-    `env.TEST: string`
-      ✔ returns test's environment name: "test"
-    `env.STAGING: string`
-      ✔ returns staging's environment name: "staging"
-    `env.REVIEW: string`
-      ✔ returns review's environment name: "review"
-    `env.PRODUCTION: string`
-      ✔ returns production's environment name: "production"
+import { env } from 'sugar-env'
+  env[string]: string
+    e.g.: `env.DEV`
+      - returns `"dev", which is the normalized development environment's name
+    e.g.: `env.TEST`
+      - returns `"test"`, which is the normalized name of the test environment
+    e.g.: `env.STAGING`
+      - returns `"staging"`, which is the normalized name of the staging environment
+    e.g.: `env.REVIEW`
+      - returns `"review"`, which is the normalized name of the review environment
+    e.g.: `env.PROD`
+      - returns `"prod"`, which is the normalized name of the production environment
+    e.g.: `env.current`
+      - returns `"dev"` when `process.env.NODE_ENV` is empty
+      - returns `"dev"` when `process.env.NODE_ENV` isn't set
+      - returns `"dev"` when `process.env.NODE_ENV` isn't one of: `"dev"`, `"test"`, `"staging"`, `"review"` or `"prod"`
+      - returns the value of `process.env.NODE_ENV` otherwise
 
-  import { env } from 'sugar-env'
-    env.is(environment: string): boolean
-      ✔ returns `true` when the current environment name is equal the one specified
-      ✔ returns `false` when the current environment name is different than the one specified
+import { env } from 'sugar-env'
+  env.is(assertionEnvironmentName: string): boolean
+    e.g.: `env.is(env.PROD)`
+      - returns `true` when current environment's name is equal `assertionEnvironmentName`
+      - returns `false` otherwise
 
-  import { env } from 'sugar-env'
-    `env(envVarName: string): string | null`
-      ✔ returns `null` when the environment variable doesn't exist
-      ✔ returns `null` when the environment variable's value is empty after trimming white spaces
-      ✔ returns the environment variable's value when it exists and it isn't empty
-    `env(envVarNames: string[]): string | null`
-      ✔ returns `null` when all given environment variables are missing
-      ✔ returns `null` when the only existing environment variable is empty
-      ✔ returns the value of the first found non-empty environment variable (`string`)
+import { env } from 'sugar-env'
+  env(envVarName: string | string[]): string | null
+    e.g.: `env('S3_KEY_SECRET')`
+      - returns `null` when environment variable is missing
+      - returns `null` when environment variable is empty (after trimming its whitespaces)
+      - returns the environment variable's value otherwise
+    e.g.: `env(['PROD_S3_KEY_SECRET', 'S3_KEY_SECRET'])`
+      - returns `null` when all environment variables are missing
+      - returns `null` when the only environment variable present is empty (after trimming its whitespaces)
+      - returns the value of the first found non-empty environment variable (`string`)
 
-  import { env, is } from 'sugar-env'
-    `env(envVarName: string | string[], [ is.defaultTo("foo") ]): string`
-      ✔ returns the specified default value when the given environment variable doesn't exist
-      ✔ returns the specified default value when the given environment variable's value is empty
-    import type { Context } from 'sugar-env'
-      `is.defaultTo(defaultValue: string): (ctx: Context<string | null>) => Context<string>`
-        ✔ sets `ctx.value` to the given `defaultValue` when `ctx.value` is `null`
-        ✔ sets `ctx.value` to the given `defaultValue` when `ctx.value` is an empty string
-        ✔ returns `ctx` unchanged when `ctx.value` is a non-empty string
+import { env, is } from 'sugar-env'
+  env<T>(environmentName: string | string[], plugs: T & ChainablePlugs<string | null, T>): PipelinedReturnType<string | null, typeof plugs>
+    using built-in plugs:
+      `is.required()`
+        e.g.: `env('API_SECRET_KEY', [ is.required() ])`
+          - throws `MissingRequiredError` when environment variable is missing
+          - throws `MissingRequiredError` when environment variable's value is empty (after trimming its whitespaces)
+          - returns a `string` otherwise
+      `is.defaultTo(defaultValue: string)`
+        e.g.: `env('PORT', [ is.defaultTo('3000') ])`
+          - returns the given default value when environment variable is missing
+          - returns the given default value when environment variable's value is empty (after trimming its whitespaces)
+          - returns a `string` otherwise
+      `is.boolean()`
+        e.g.: `env('FEATURE_ADMIN_ENABLED', [ is.boolean() ])`
+          - returns `true` when environment variable's value is `"1"`
+          - returns `true` when environment variable's value is `"true"` (case insensitive)
+          - returns `false` otherwise
+      `in.integer()`
+        e.g.: `env('PORT', [ is.integer() ])`
+          - returns `null` when the environment variable is missing
+          - returns `null` when environment variable's value is empty (after trimming its whitespaces)
+          - throws `ExpectedNumericStringError` if the environment variable's value isn't an integer string
+          - returns a `number` (integer) otherwise
+      `is.float()`
+        e.g.: `env('SAMPLING_SIZE', [ is.float() ])`
+          - returns `null` when the environment variable is missing
+          - returns `null` when the environment variable's value is empty (after trimming its whitespaces)
+          - throws `ExpectedNumericStringError` if the environment variable's value isn't a numeric string
+          - returns a `number` (float) otherwise
+      `is.url()`
+        e.g.: `env('API_BASE_URL, [ is.url() ])`
+          - returns `null` when the environment variable is missing
+          - returns `null` when the environment variable's value is empty (after trimming its whitespaces)
+          - throws `ExpectedValidUrlError` when the environment variable's value isn't a valid URL string
+          - returns a `string` otherwise
+      `is.base64()`
+        e.g.: `env('COOKIE_SECRET, [ is.base64() ])`
+          - returns `null` when the environment variable is missing
+          - returns `null` when the environment variable's value is empty (after trimming its whitespaces)
+          - returns the decoded base64 `string` otherwise
+    plugs can be combined:
+      e.g.: `env('PORT', [ is.defaultTo('3000'), is.integer() ])`
+        - throws `ExpectedNumericStringError` if the environment variable's value isn't a numeric string
+        - throws `ExpectedNumericStringError` if the default value isn't a numeric string
+        - returns the given default value as a number (integer) when environment variable is missing
+        - returns the given default value as a number (integer) when environment variable's value is empty (after trimming its whitespaces)
+        - returns a `number` (integer) otherwise
+      e.g.: `env('API_BASE_URL', [ is.required(), is.url() ])`
+        - throws `MissingRequiredError` if the environment variable is missing
+        - throws `MissingRequiredError` if the environment variable's value is empty (after trimming its whitespaces)
+        - throws `ExpectedValidUrlError` if the environment variable's value isn't a valid URL string
+        - returns a `string` otherwise
+    can use a custom plug:
 
-  import { env, is } from 'sugar-env'
-    `env(envVarname: string | string[], [ is.required() ]): string`
-      ✔ sets `ctx.value` to instance of `MissingRequiredError` when the given environment variable is missing
-      ✔ sets `ctx.value` to instance of `MissingRequiredError` when the given environment variable is empty
-      ✔ returns environment variable\'s value when it's non-empty
-    import type { Context } from 'sugar-env'
-      `is.required(): (ctx: Context<string | null>) => Context<string>`
-        ✔ sets `ctx.value` to instance of `MissingRequiredError` when `ctx.value` is `null`
-        ✔ sets `ctx.value` to instance of `MissingRequiredError` when `ctx.value` is an empty string
-        ✔ returns `ctx` unchanged when `ctx.value` is a non-empty string
-    import { SugarEnvError, InvalidValueError, MissingRequiredError } from 'sugar-env'
-      ✔ `MissingRequiredError` extends `InvalidValueError`
-      ✔ `MissingRequiredError` extends `SugarEnvError`
+      ```
+      import type { Context } from 'sugar-env'
 
-  import { env, is } from 'sugar-env'
-    `env(envVarName: string | string[], [ is.boolean() ]): boolean | null`
-      ✔ returns `false` when environment variable is missing
-      ✔ returns `false` when environment variable is empty
-      ✔ returns `false` when environment variable\'s value is `"0"`
-      ✔ returns `false` when environment variable\'s value is `"false"`
-      ✔ returns `true` when environment variable\'s value is `"1"`
-      ✔ returns `true` when environment variable\'s value is `"true"`
-      ✔ throws `ExpectedBooleanLikeError` when environment variable has any other value
-    import type { Context } from 'sugar-env'
-      `is.boolean(): (ctx: Context<string | null>) => Context<boolean | null>`
-        ✔ sets `ctx.value` to `false` when `ctx.value` is null
-        ✔ sets `ctx.value` to `true` when `ctx.value` is `"1"`
-        ✔ sets `ctx.value` to `true` when `ctx.value` is `"true"` (case insensitive)
-        ✔ sets `ctx.value` to `false` when `ctx.value` is `"0"`
-        ✔ sets `ctx.value` to `false` when `ctx.value` is `"false"` (case insensitive)
-        ✔ sets `ctx.value` to instance of `ExpectedBooleanLikeError` when `ctx.value` has any other value
-    import { SugarEnvError, InvalidValueError, ExpectedBooleanLikeError } from 'sugar-env'
-      ✔ `ExpectedBooleanLikeError` extends `InvalidValueError`
-      ✔ `InvalidValueError` extends `SugarEnvError`
-
-  import { env, is } from 'sugar-env'
-    `env(envVarName: string | string[], [ is.integer() ]): number | null`
-      ✔ returns `null` when the given environment variable is missing
-      ✔ returns `null` when the given environment variable's value is empty
-      ✔ throws `ExpectedIntegerError` when the given environment variable's value isn't numeric
-      ✔ returns a `number` (integer) when the given environment variable's value is numeric
-    import type { Context } from 'sugar-env'
-      `is.integer(): (ctx: Context<string | null>) => Context<ExpectedIntegerError | number | null>`
-        ✔ returns `ctx` unchanged when `ctx.value` is `null`
-        ✔ sets `ctx.value` to instance of `ExpectedIntegerError` when `ctx.value` isn't a numeric string
-        ✔ returns `number` (integer) when `ctx.value` is an integer string
-        ✔ returns `number` (integer) when `ctx.value` is a float string
-    import { SugarEnvError, InvalidValueError, ExpectedIntegerError } from 'sugar-env'
-      ✔ `ExpectedIntegerError` extends `InvalidValueError`
-      ✔ `InvalidValueError` extends `SugarEnvError`
-
-  import { env, is } from 'sugar-env'
-    `env(envVarName: string | string[], [ is.float() ]): number | null`
-      ✔ returns `null` when the given environment variable is missing
-      ✔ returns `null` when the given environment variable's value is empty
-      ✔ throws `ExpectedFloatError` when the given environment variable's value isn't numeric
-      ✔ returns a `number` (float) when the given environment variable's value is numeric
-    import type { Context } from 'sugar-env'
-      `is.float(): (ctx: Context<string | null>) => Context<ExpectedFloatError | number | null>`
-        ✔ returns `ctx` unchanged when `ctx.value` is `null`
-        ✔ sets `ctx.value` to instance of `ExpectedFloatError` when `ctx.value` isn't a numeric string
-        ✔ returns `number` (float) when `ctx.value` is a float string
-        ✔ returns `number` (float) when `ctx.value` is an integer string
-    import { SugarEnvError, InvalidValueError, ExpectedFloatError } from 'sugar-env'
-      ✔ `ExpectedFloatError` extends `InvalidValueError`
-      ✔ `InvalidValueError` extends `SugarEnvError`
-
-  import { env, is } from 'sugar-env'
-    `env(envVarName: string | string[], [ is.url() ]): string | null`
-      ✔ returns `null` when the environment variable's value is missing
-      ✔ returns `null` when the environment variable's value is empty
-      ✔ throws `ExpectedValidUrlError` when the environment variable\'s value isn't a valid URL
-      ✔ returns the environment variable's value when it's a valid URL
-    import type { Context } from 'sugar-env'
-      `is.url(): (ctx: Context<string | null>) => Context<ExpectedUrlError | string | null>`
-        ✔ returns `ctx` unchanged when `ctx.value` is `null`
-        ✔ sets `ctx.value` to instance of `ExpectedUrlError` when `ctx.value` isn't a valid URL
-        ✔ returns `ctx` unchanged when `ctx.value` is a valid URL string
-    import { SugarEnvError, InvalidValueError, ExpectedUrlError } from 'sugar-env'
-      ✔ `ExpectedUrlError` extends `InvalidValueError`
-      ✔ `InvalidValueError` extends `SugarEnvError`
-
-  import { env, is } from 'sugar-env
-    `env(envVarName: string | string[], [ is.base64() ]): string | null`
-      ✔ returns `null` when the environment variable doesn't exist
-      ✔ returns `null` when the environment variable's value is empty
-      ✔ returns the environment variable's value after decoding it from base64
-    import type { Context } from 'sugar-env'
-      `is.base64(): (ctx: Context) => typeof ctx`
-        ✔ returns `ctx` unchanged when `ctx.value` is `null`
-        ✔ sets `ctx.value` to the base64-decoded value of `ctx.value` when it is non-empty
+      const myPlug = (ctx: Context) => {
+        return ctx.value === null
+          ? { ...ctx, value: 'foo' }
+          : ctx
+      }
+      ```
+        e.g.: env('FOO', [ myPlug ])
+          - returns `"foo"` when environment variable is missing
+          - returns `"foo"` when environment variable is empty (after trimming its whitespaces)
+          - returns environment variable's value (`string`) otherwise
 ```

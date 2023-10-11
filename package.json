@@ -33,10 +33,12 @@
   "scripts": {
     "build": "tsc",
     "pretest": "tsc",
-    "test": "echo \"missing tests\" && exit 1"
+    "test": "mocha tests/**/*.spec.js"
   },
   "devDependencies": {
     "@types/node": "^20.8.4",
+    "chai": "^4.3.10",
+    "mocha": "^10.2.0",
     "typescript": "^5.2.2"
   }
 }
