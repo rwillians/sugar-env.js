@@ -1,8 +1,8 @@
 node_modules/
+.nyc_output/
 coverage/
 dist/
 *.log
 .DS_Store
-.nyc_output
 npm-debug.log*
 .node_repl_history
