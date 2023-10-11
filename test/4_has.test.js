@@ -5,15 +5,15 @@ const env = require('../dist/index')
 const { expect } = require('chai')
 
 describe('const env = require(\'sugar-env\')', () => {
-  describe('env.has(name: String): Boolean', () => {
+  describe('env.has(envVarName: string): boolean', () => {
     process.env.FOO_HAS = '1'
 
-    it('returns `true` if exists an environment variable with the given name', () => {
+    it('returns `true` when the given environment variable exists', () => {
       expect(env.has('FOO_HAS')).to.be.equals(true)
     })
 
-    it('returns `false` when there\'s no environment variable with the given name', () => {
-      expect(env.has('FOO_HASNT')).to.be.equals(false)
+    it('returns `false` when the given environment variable doesn\'t exist', () => {
+      expect(env.has('FOOOOOO_DOESNT_EXIST')).to.be.equals(false)
     })
   })
 })
