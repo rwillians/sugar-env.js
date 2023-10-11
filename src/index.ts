@@ -31,6 +31,7 @@ function _getAs<T> (fn: IConversionFunction<T>) {
   function getAs (names: string | string[], fallback: T): T
   function getAs (names: string | string[], fallback: Nullable<T> = null) {
     const value = get(names)
+
     if (value === null) {
       return fallback
     }
@@ -45,7 +46,12 @@ get.base64 = _getAs<string>((value) => Buffer.from(value, 'base64').toString('ut
 get.boolean = _getAs<boolean>((value) => [ '1', 'true' ].includes(value.toLowerCase()))
 get.int = _getAs<number>((value) => parseInt(value, 10))
 get.float = _getAs<number>((value) => parseFloat(value))
-get.url = _getAs<string>((value) => value.endsWith('/') ? value : `${value}/`)
+
+/**
+ * @deprecated Use `env.get(envVarName: string): string` instead.
+ */
+const getUrl = _getAs<string>((value) => value.endsWith('/') ? value : `${value}/`)
+get.url = getUrl
 
 const current = process.env.NODE_ENV || Environments.DEVELOPMENT
 
@@ -54,6 +60,9 @@ const is = (environment: Environments): Boolean => {
 }
 
 const entrypoint = (current: Environments): { is: (x: Environments) => boolean } => ({
+  /**
+   * @deprecated Use `env.is(environmentName: string): boolean` instead.
+   */
   is: (environment: Environments) => current === environment
 })
 
