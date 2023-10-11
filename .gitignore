@@ -1,8 +1,8 @@
-coverage
-node_modules
+node_modules/
+coverage/
+dist/
 *.log
 .DS_Store
-.node_repl_history
 .nyc_output
 npm-debug.log*
-dist/
+.node_repl_history
