@@ -1,17 +1,18 @@
 {
   "name": "sugar-env",
-  "version": "1.5.15",
-  "description": "Sugar code to read environment variables with default values.",
+  "version": "2.0.0",
+  "description": "Sugar code to read environment variables with default values and type casts.",
   "license": "MIT",
   "author": "Rafael Willians <me@rwillians.com>",
   "contributors": [
-    "Lucas Santos <hello@lsantos.dev>"
+    "Rafael Willians <me@rwillians.com>",
+    "Lucas Santos <hello@lsantos.dev>",
+    "Roz <roz@rjmunhoz.me>"
   ],
   "keywords": [
     "env",
     "environment",
-    "default",
-    "current"
+    "environment variables"
   ],
   "main": "dist/index.js",
   "files": [
@@ -27,24 +28,15 @@
     "url": "https://github.com/rwillians/sugar-env.js/issues"
   },
   "engines": {
-    "node": ">=7.6.0"
+    "node": ">=18.0.0"
   },
   "scripts": {
     "build": "tsc",
-    "coverage": "nyc --reporter=text npm test",
-    "coverage:report": "nyc report --reporter=text-lcov",
-    "lint": "standard",
-    "lint:fix": "standard --fix",
     "pretest": "tsc",
-    "test": "mocha test/*.test.js --check-leaks --full-trace --use_strict --recursive"
+    "test": "echo \"missing tests\" && exit 1"
   },
   "devDependencies": {
     "@types/node": "^20.8.4",
-    "chai": "^4.3.10",
-    "debug": "^4.3.4",
-    "mocha": "^10.2.0",
-    "nyc": "^15.1.0",
-    "standard": "^17.1.0",
     "typescript": "^5.2.2"
   }
 }
