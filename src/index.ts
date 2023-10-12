@@ -39,10 +39,10 @@ type Plug<I, O> = { name: string, fn: (ctx: Context<I>) => Context<O> }
 type ChainablePlugs<Input, Plugs> =
   Plugs extends [infer Head, ...infer Tail]
   ? Head extends Plug<Input, infer Output>
-  ? [Plug<Input, Output>, ...ChainablePlugs<Exclude<Output, Error>, Tail>]
-  : Head extends Plug<any, infer Output>
-  ? [never, ...ChainablePlugs<Exclude<Output, Error>, Tail>]
-  : never
+    ? [Plug<Input, Output>, ...ChainablePlugs<Exclude<Output, Error>, Tail>]
+    : Head extends Plug<any, infer Output>
+      ? [never, ...ChainablePlugs<Exclude<Output, Error>, Tail>]
+      : never
   : [];
 
 type PipelinedReturnType<Input, Plugs> =
